@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Switch, Route } from 'react-router-dom';
+import YourForm from './Components/YourForm';
+import Card from './Components/Card';
+import DetailsPage from './Components/DetailsPage';
+import NavBar from './Components/NavBar';
+
 
 function App() {
+  const [userData, setUserData] = useState([]);
+
+  const handleFormSubmit = (values) => {
+    setUserData([...userData, values]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <NavBar />
+        <Routes>
+          <Route path="/card" element={ <Card userData={userData} />}>
+           
+          </Route>
+          <Route path="/details/:id" element={ <DetailsPage userData={userData} />}>
+            
+          </Route>
+          <Route path="/" exact element={ <YourForm onSubmit={handleFormSubmit} />} >
+            
+          </Route>
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
